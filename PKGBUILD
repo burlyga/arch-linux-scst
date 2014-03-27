@@ -1,4 +1,4 @@
-# $Id: PKGBUILD 207393 2014-03-08 15:46:53Z thomas $
+# $Id: PKGBUILD 208695 2014-03-25 06:57:17Z thomas $
 # Maintainer: Tobias Powalowski <tpowa@archlinux.org>
 # Maintainer: Thomas Baechler <thomas@archlinux.org>
 # Maintainer: Alex Burlyga <alex.burlyga.ietf@gmail.com>
@@ -6,15 +6,15 @@
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-scst           # Build kernel with a different name
 _srcname=linux-3.13
-pkgver=3.13.6
+pkgver=3.13.7
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
+        "https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64'
         # standard config files for mkinitcpio ramdisk
@@ -34,7 +34,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'scst_exec_req_fifo-3.13.patch'
         )
 md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
-         'a9b131a589a176b4c437b8ca4557b85e'
+         'cb33b329d3417846d310c7f58a2614b6'
          '5094439a68a8edf6b3aa8651b46aed52'
          '017fac01ccf8e7fcb8ab13f68c4fbabc'
          'eb14dcfd80c00852ef81ded6e826826a'
