@@ -31,6 +31,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         '0001-Bluetooth-allocate-static-minor-for-vhci.patch'
         'i8042-fix-aliases.patch'
         'put_page_callback-3.13.3.patch'
+        'scst_exec_req_fifo-3.13.patch'
         )
 md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
          'a9b131a589a176b4c437b8ca4557b85e'
@@ -48,7 +49,9 @@ md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
          'e6fa278c092ad83780e2dd0568e24ca6'
          '06f1751777e0772c18c3fa4fbae91aa5'
          '93dbf73af819b77f03453a9c6de2bb47'
-         '759fe2d25ceedfe3f2abda5a4b30ddff')
+         '759fe2d25ceedfe3f2abda5a4b30ddff'
+         'e60ac241d65df97cf230ffc980ec7963'
+          )
 
 _kernelname=${pkgbase#linux}
 
@@ -96,6 +99,9 @@ prepare() {
 
   # Add support for put_page in TCP stack for performance improvements in SCST's iscsi target
   patch -p1 -i "${srcdir}/put_page_callback-3.13.3.patch"
+
+  # Add support for FIFO order processing in scsi layer so pass through handlers work correctly
+  patch -p1 -i "${srcdir}/scst_exec_req_fifo-3.13.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
