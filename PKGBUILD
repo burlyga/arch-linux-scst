@@ -35,8 +35,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         )
 md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
          'cb33b329d3417846d310c7f58a2614b6'
-         '5094439a68a8edf6b3aa8651b46aed52'
-         '017fac01ccf8e7fcb8ab13f68c4fbabc'
+         'c72b152a2026be08013b115b2dfce558'
+         'c27811afb0238c132af61516ea1eb27a'
          'eb14dcfd80c00852ef81ded6e826826a'
          '98beb36f9b8cf16e58de2483ea9985e3'
          '989dc54ff8b179b0f80333cc97c0d43f'
@@ -50,8 +50,7 @@ md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
          '06f1751777e0772c18c3fa4fbae91aa5'
          '93dbf73af819b77f03453a9c6de2bb47'
          '759fe2d25ceedfe3f2abda5a4b30ddff'
-         'e60ac241d65df97cf230ffc980ec7963'
-          )
+         'e60ac241d65df97cf230ffc980ec7963')
 
 _kernelname=${pkgbase#linux}
 
