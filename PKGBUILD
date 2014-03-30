@@ -1,6 +1,3 @@
-# $Id: PKGBUILD 208695 2014-03-25 06:57:17Z thomas $
-# Maintainer: Tobias Powalowski <tpowa@archlinux.org>
-# Maintainer: Thomas Baechler <thomas@archlinux.org>
 # Maintainer: Alex Burlyga <alex.burlyga.ietf@gmail.com>
 
 #pkgbase=linux               # Build stock -ARCH kernel
