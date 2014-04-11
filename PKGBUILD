@@ -2,52 +2,45 @@
 
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-scst           # Build kernel with a different name
-_srcname=linux-3.13
-pkgver=3.13.8
-pkgrel=1
+_srcname=linux-3.14
+pkgver=3.14
+pkgrel=4
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         'change-default-console-loglevel.patch'
-        'criu-no-expert.patch'
-        '0001-sunrpc-create-a-new-dummy-pipe-for-gssd-to-hold-open.patch'
-        '0002-sunrpc-replace-sunrpc_net-gssd_running-flag-with-a-m.patch'
-        '0003-nfs-check-if-gssd-is-running-before-attempting-to-us.patch'
-        '0004-rpc_pipe-remove-the-clntXX-dir-if-creating-the-pipe-.patch'
-        '0005-sunrpc-add-an-info-file-for-the-dummy-gssd-pipe.patch'
-        '0006-rpc_pipe-fix-cleanup-of-dummy-gssd-directory-when-no.patch'
-        '0001-syscalls.h-use-gcc-alias-instead-of-assembler-aliase.patch'
         '0001-Bluetooth-allocate-static-minor-for-vhci.patch'
-        'i8042-fix-aliases.patch'
-        'put_page_callback-3.13.3.patch'
-        'scst_exec_req_fifo-3.13.patch'
+        '0002-module-allow-multiple-calls-to-MODULE_DEVICE_TABLE-p.patch'
+        '0003-module-remove-MODULE_GENERIC_TABLE.patch'
+        '0004-fs-Don-t-return-0-from-get_anon_bdev.patch'
+        '0005-Revert-Bluetooth-Enable-autosuspend-for-Intel-Blueto.patch'
+        '0006-genksyms-fix-typeof-handling.patch'
+        '0007-Fix-the-use-of-code32_start-in-the-EFI-boot-stub.patch'
+        'put_page_callback-3.14.patch'
+        'scst_exec_req_fifo-3.14.patch'
         )
-md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
-         '72b911bfc50de88c67bd0e8732978deb'
-         'c72b152a2026be08013b115b2dfce558'
-         'c27811afb0238c132af61516ea1eb27a'
-         'eb14dcfd80c00852ef81ded6e826826a'
-         '98beb36f9b8cf16e58de2483ea9985e3'
-         '989dc54ff8b179b0f80333cc97c0d43f'
-         'dd2adb99cd3feed6f11022562901965c'
-         'b00cc399d3797cb0793e18b5bf387a50'
-         '7cbd2349cdf046acc37b652c06ba36be'
-         '10dbaf863e22b2437e68f9190d65c861'
-         'd5907a721b97299f0685c583499f7820'
-         'a724515b350b29c53f20e631c6cf9a14'
-         'e6fa278c092ad83780e2dd0568e24ca6'
-         '06f1751777e0772c18c3fa4fbae91aa5'
-         '93dbf73af819b77f03453a9c6de2bb47'
-         '759fe2d25ceedfe3f2abda5a4b30ddff'
-         'e60ac241d65df97cf230ffc980ec7963')
+sha256sums=('61558aa490855f42b6340d1a1596be47454909629327c49a5e4e10268065dffa'
+            '4f65fe6562e48b260a074f35dae90681bbc8dbdf7b68d650c701bd44a51ccc02'
+            'c5d1dab42a6f1aa4034fd30a73e27f9803d93dcfa3f35487dd5b37d6be56c0fa'
+            'f0d90e756f14533ee67afda280500511a62465b4f76adcc5effa95a40045179c'
+            'faced4eb4c47c4eb1a9ee8a5bf8a7c4b49d6b4d78efbe426e410730e6267d182'
+            'aa17aa9a5c663552ea047b9d2a9a916207bed361bd387418c122f6611ee576a6'
+            '48c459a2a14e8f161b79943e9ea405c4e98cd5abdab62749c4e9d65e5735382a'
+            'f15a6831736e4c0b8b355fd7887445e770500d439cb851623ea300cc50ba4d97'
+            '4b9aed8d0b7c2389d9413caa2152e6591200630c19dda8224d43eae7d863a0d6'
+            'e0666f75eabc2bbfa668cb35ee72dfbad48e5963828a444fbb50388048a8cd3c'
+            'd2c449d346ae52724d36c3224bd06fcae7775b0698a9096eb89eeaa6dbc092e5'
+            '5a175c698cfdbf942f712afeda2a6af3f4e63a742ec6b6dc3a64bc6a7fb685bb'
+            '634925333f3795ae2d5833a7f81b42666d27e129dc3e9f08b925ab87a6a77ef1'
+            '110d00c383d3e6402157a47bb580ad79a3e05196ba2c2ab56dd041f2af174581')
 
 _kernelname=${pkgbase#linux}
 
@@ -55,7 +48,7 @@ prepare() {
   cd "${srcdir}/${_srcname}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  #patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -65,39 +58,35 @@ prepare() {
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
 
-  # allow Checkpoint/restore (for criu) without EXPERT=y
-  patch -p1 -i "${srcdir}/criu-no-expert.patch"
-
-  # fix 15 seocnds nfs delay
-  # http://git.linux-nfs.org/?p=trondmy/linux-nfs.git;a=commitdiff;h=4b9a445e3eeb8bd9278b1ae51c1b3a651e370cd6
-  patch -p1 -i "${srcdir}/0001-sunrpc-create-a-new-dummy-pipe-for-gssd-to-hold-open.patch"
-  # http://git.linux-nfs.org/?p=trondmy/linux-nfs.git;a=commitdiff;h=89f842435c630f8426f414e6030bc2ffea0d6f81
-  patch -p1 -i "${srcdir}/0002-sunrpc-replace-sunrpc_net-gssd_running-flag-with-a-m.patch"
-  # http://git.linux-nfs.org/?p=trondmy/linux-nfs.git;a=commitdiff;h=6aa23d76a7b549521a03b63b6d5b7880ea87eab7
-  patch -p1 -i "${srcdir}/0003-nfs-check-if-gssd-is-running-before-attempting-to-us.patch"
-
-  # fix nfs kernel oops
-  # http://git.linux-nfs.org/?p=trondmy/linux-nfs.git;a=commitdiff;h=3396f92f8be606ea485b0a82d4e7749a448b013b
-  patch -p1 -i "${srcdir}/0004-rpc_pipe-remove-the-clntXX-dir-if-creating-the-pipe-.patch"
-  # http://git.linux-nfs.org/?p=trondmy/linux-nfs.git;a=commitdiff;h=e2f0c83a9de331d9352185ca3642616c13127539
-  patch -p1 -i "${srcdir}/0005-sunrpc-add-an-info-file-for-the-dummy-gssd-pipe.patch"
-  # http://git.linux-nfs.org/?p=trondmy/linux-nfs.git;a=commitdiff;h=23e66ba97127ff3b064d4c6c5138aa34eafc492f
-  patch -p1 -i "${srcdir}/0006-rpc_pipe-fix-cleanup-of-dummy-gssd-directory-when-no.patch"
-
-  # Fix symbols: Revert http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=83460ec8dcac14142e7860a01fa59c267ac4657c
-  patch -Rp1 -i "${srcdir}/0001-syscalls.h-use-gcc-alias-instead-of-assembler-aliase.patch"
-
-  # Fix i8042 aliases
-  patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
-
   # Fix vhci warning in kmod (to restore every kernel maintainer's sanity)
   patch -p1 -i "${srcdir}/0001-Bluetooth-allocate-static-minor-for-vhci.patch"
 
+  # Fix atkbd aliases
+  patch -p1 -i "${srcdir}/0002-module-allow-multiple-calls-to-MODULE_DEVICE_TABLE-p.patch"
+  patch -p1 -i "${srcdir}/0003-module-remove-MODULE_GENERIC_TABLE.patch"
+
+  # Fix various bugs caused by rootfs having FSID 0
+  # See http://www.spinics.net/lists/kernel/msg1716924.html
+  patch -p1 -i "${srcdir}/0004-fs-Don-t-return-0-from-get_anon_bdev.patch"
+
+  # Disable usb autosuspend for intel btusb
+  # See http://www.spinics.net/lists/kernel/msg1716461.html
+  # Until a solution is found, make sure the driver leaves autosuspend alone
+  patch -p1 -i "${srcdir}/0005-Revert-Bluetooth-Enable-autosuspend-for-Intel-Blueto.patch"
+
+  # Fix generation of symbol CRCs
+  # http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=dc53324060f324e8af6867f57bf4891c13c6ef18
+  patch -p1 -i "${srcdir}/0006-genksyms-fix-typeof-handling.patch"
+
+  # Fix the use of code32_start in the EFI boot stub
+  # http://permalink.gmane.org/gmane.linux.kernel/1679881
+  patch -p1 -i "${srcdir}/0007-Fix-the-use-of-code32_start-in-the-EFI-boot-stub.patch"
+
   # Add support for put_page in TCP stack for performance improvements in SCST's iscsi target
-  patch -p1 -i "${srcdir}/put_page_callback-3.13.3.patch"
+  patch -p1 -i "${srcdir}/put_page_callback-3.14.patch"
 
   # Add support for FIFO order processing in scsi layer so pass through handlers work correctly
-  patch -p1 -i "${srcdir}/scst_exec_req_fifo-3.13.patch"
+  patch -p1 -i "${srcdir}/scst_exec_req_fifo-3.14.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
@@ -246,25 +235,6 @@ _package-headers() {
 
   cp arch/${KARCH}/kernel/asm-offsets.s "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/kernel/"
 
-  # add headers for lirc package
-  # pci
-  for i in bt8xx cx88 saa7134; do
-    mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/pci/${i}"
-    cp -a drivers/media/pci/${i}/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/pci/${i}"
-  done
-  # usb
-  for i in cpia2 em28xx pwc sn9c102; do
-    mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/usb/${i}"
-    cp -a drivers/media/usb/${i}/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/usb/${i}"
-  done
-  # i2c
-  mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/i2c"
-  cp drivers/media/i2c/*.h  "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/i2c/"
-  for i in cx25840; do
-    mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/i2c/${i}"
-    cp -a drivers/media/i2c/${i}/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/i2c/${i}"
-  done
-
   # add docbook makefile
   install -D -m644 Documentation/DocBook/Makefile \
     "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/DocBook/Makefile"
@@ -296,6 +266,7 @@ _package-headers() {
   # http://bugs.archlinux.org/task/13146
   mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-frontends/"
   cp drivers/media/dvb-frontends/lgdt330x.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-frontends/"
+  mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/i2c/"
   cp drivers/media/i2c/msp3400-driver.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/i2c/"
 
   # add dvb headers
