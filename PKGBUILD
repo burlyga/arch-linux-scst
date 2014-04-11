@@ -3,7 +3,7 @@
 #pkgbase=linux               # Build stock -ARCH kernel
 pkgbase=linux-scst           # Build kernel with a different name
 _srcname=linux-3.13
-pkgver=3.13.7
+pkgver=3.13.8
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -31,7 +31,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'scst_exec_req_fifo-3.13.patch'
         )
 md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
-         'cb33b329d3417846d310c7f58a2614b6'
+         '72b911bfc50de88c67bd0e8732978deb'
          'c72b152a2026be08013b115b2dfce558'
          'c27811afb0238c132af61516ea1eb27a'
          'eb14dcfd80c00852ef81ded6e826826a'
