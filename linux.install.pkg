@@ -2,7 +2,7 @@
 # arg 2:  the old package version
 
 KERNEL_NAME=-scst
-KERNEL_VERSION=3.13.8-1-scst
+KERNEL_VERSION=3.14.0-4-scst
 
 post_install () {
   # updating module dependencies
